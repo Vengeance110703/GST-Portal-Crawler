@@ -10,11 +10,15 @@ import os
 # Global variables
 GSTIN = "27AAAAP0267H2ZN"
 file_name = "audio.mp3"
+audio_folder_name = "audio"
 
 chrome_options = webdriver.ChromeOptions()
 
+active_dir = os.getcwd()
+download_dir = os.path.join(active_dir, audio_folder_name)
+
 prefs = {
-    "download.default_directory": os.getcwd(),
+    "download.default_directory": download_dir,
     "download.prompt_for_download": False,
     "download.directory_upgrade": True,
     "safebrowsing.enabled": True,
