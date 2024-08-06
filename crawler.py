@@ -38,6 +38,24 @@ gstin_text_box = driver.find_element(
 gstin_text_box.clear()
 gstin_text_box.send_keys(GSTIN)
 
+driver.execute_script(
+    "window.open('https://services.gst.gov.in/services/audiocaptcha');"
+)
+
+driver.switch_to.window(driver.window_handles[1])
+
+driver.execute_script(
+    """
+    // Javascript Code to create the anchor tag and download the file
+    let aLink = document.createElement("a");
+    let videoSrc = document.querySelector("video").firstChild.src;
+    aLink.href = videoSrc;
+    aLink.download = "";
+    aLink.click();
+    aLink.remove();
+"""
+)
+
 time.sleep(100)
 
 driver.quit()
