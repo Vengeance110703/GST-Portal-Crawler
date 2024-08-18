@@ -1,5 +1,27 @@
+import speech_recognition as sr
 import os
+import subprocess
 
+audio_folder_name = "audio"
 active_dir = os.getcwd()
-download_dir = os.path.join(active_dir, "audio")
-print(download_dir) 
+download_dir = os.path.join(active_dir, audio_folder_name)
+
+subprocess.call(
+    [
+        "ffmpeg",
+        "-i",
+        os.path.join(download_dir, "audiocaptcha.mp3"),
+        os.path.join(download_dir, "audiocaptcha.wav"),
+        "-y",
+    ]
+)
+
+
+AUDIO_FILE = os.path.join(download_dir, "audiocaptcha.wav")
+
+recogniser = sr.Recognizer()
+with sr.AudioFile(AUDIO_FILE) as source:
+    audio = recogniser.record(source)
+
+print(recogniser.recognize_vosk(audio))
+
